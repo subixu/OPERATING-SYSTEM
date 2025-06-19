@@ -1,0 +1,53 @@
+ROUND ROBIN SCHEDULING
+#include <stdio.h>
+int main() {
+    int i, n, time, remain, time_quantum;
+    int wt = 0, tat = 0;
+    int bt[10], rt[10], at[10]; // burst time, remaining time, arrival time
+    int flag = 0;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    remain = n;
+    for (i = 0; i < n; i++) {
+        printf("Enter Burst Time for P%d: ", i+1);
+        scanf("%d", &bt[i]);
+        rt[i] = bt[i]; // initialize remaining time
+    }
+
+    printf("Enter Time Quantum: ");
+    scanf("%d", &time_quantum);
+    printf("\nGantt Chart:\n");
+    time = 0; // current time
+    while (remain != 0) {
+        flag = 1;
+        for (i = 0; i < n; i++) {
+            if (rt[i] > 0) {
+                flag = 0;
+                if (rt[i] > time_quantum) {
+                    printf("P%d -> ", i+1);
+                    time += time_quantum;
+                    rt[i] -= time_quantum;
+                } else {
+                    printf("P%d -> ", i+1);
+                    time += rt[i];
+                    wt += time - bt[i]; // total waiting time
+                    rt[i] = 0;
+                    remain--;
+                }
+            }
+        }
+        if (flag == 1)
+            break;
+    }
+
+    printf("END\n");
+    printf("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time\n");
+    for (i = 0; i < n; i++) {
+        int turnaround_time = bt[i] + (wt/n); // approx
+        printf("P%d\t%d\t\t%d\t\t%d\n", i+1, bt[i], (wt/n), turnaround_time);
+        tat += turnaround_time;
+    }
+    printf("\nAverage Waiting Time: %.2f", (float)wt/n);
+    printf("\nAverage Turnaround Time: %.2f\n", (float)tat/n);
+    return 0;
+}
