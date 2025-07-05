@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    int records[10] = {1, 2, 3, 4, 5};
+    int n = 5;
+
+    printf("Reading records sequentially:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Record %d: %d\n", i + 1, records[i]);
+    }
+
+    // Simulate accessing 4th record
+    printf("\nAccessing 4th record by reading previous records:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("Record %d: %d\n", i + 1, records[i]);
+    }
+
+    return 0;
+}
