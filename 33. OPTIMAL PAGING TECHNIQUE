@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+int predict(int pages[], int n, int index, int frames[], int size) {
+    int result = -1, farthest = index;
+    for (int i = 0; i < size; i++) {
+        int j;
+        for (j = index; j < n; j++) {
+            if (frames[i] == pages[j]) {
+                if (j > farthest) {
+                    farthest = j;
+                    result = i;
+                }
+                break;
+            }
+        }
+        if (j == n) return i;
+    }
+    return (result == -1) ? 0 : result;
+}
+
+int main() {
+    int pages[] = {7, 0, 1, 2, 0, 3, 0, 4}, n = 8;
+    int frames[3] = {-1, -1, -1}, faults = 0;
+
+    for (int i = 0; i < n; i++) {
+        int hit = 0;
+        for (int j = 0; j < 3; j++) {
+            if (frames[j] == pages[i]) {
+                hit = 1;
+                break;
+            }
+        }
+
+        if (!hit) {
+            int index = predict(pages, n, i + 1, frames, 3);
+            frames[index] = pages[i];
+            faults++;
+        }
+
+        printf("Frame: ");
+        for (int k = 0; k < 3; k++) printf("%d ", frames[k]);
+        printf("\n");
+    }
+
+    printf("Total Page Faults: %d\n", faults);
+    return 0;
+}
