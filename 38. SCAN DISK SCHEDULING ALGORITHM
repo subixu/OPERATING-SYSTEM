@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int main() {
+    int req[] = {40, 10, 22, 82, 170, 140}, n = 6, head = 50, i;
+    qsort(req, n, sizeof(int), compare);
+
+    printf("SCAN order:\n");
+    for (i = 0; i < n; i++)
+        if (req[i] >= head) break;
+
+    for (int j = i; j < n; j++) printf("%d ", req[j]);
+    for (int j = i - 1; j >= 0; j--) printf("%d ", req[j]);
+
+    return 0;
+}
