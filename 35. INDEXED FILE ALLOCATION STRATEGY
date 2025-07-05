@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int indexBlock[5] = {100, 101, 102, 103, 104};
+
+    printf("Indexed file blocks:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Block %d: %d\n", i, indexBlock[i]);
+    }
+
+    // Access 3rd block
+    printf("\nAccessing 3rd block: %d\n", indexBlock[2]);
+
+    return 0;
+}
