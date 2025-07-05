@@ -1,0 +1,31 @@
+#include <stdio.h>
+#define SIZE 3
+
+int main() {
+    int pages[] = {1, 3, 0, 3, 5, 6}, n = 6;
+    int frames[SIZE], front = 0, faults = 0;
+
+    for (int i = 0; i < SIZE; i++) frames[i] = -1;
+
+    for (int i = 0; i < n; i++) {
+        int hit = 0;
+        for (int j = 0; j < SIZE; j++) {
+            if (frames[j] == pages[i]) {
+                hit = 1;
+                break;
+            }
+        }
+        if (!hit) {
+            frames[front] = pages[i];
+            front = (front + 1) % SIZE;
+            faults++;
+        }
+
+        printf("Frame: ");
+        for (int k = 0; k < SIZE; k++) printf("%d ", frames[k]);
+        printf("\n");
+    }
+
+    printf("Total Page Faults: %d\n", faults);
+    return 0;
+}
