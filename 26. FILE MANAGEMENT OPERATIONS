@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    FILE *f = fopen("file.txt", "w");
+    fprintf(f, "File content\n");
+    fclose(f);
+
+    f = fopen("file.txt", "r");
+    char line[100];
+    fgets(line, 100, f);
+    printf("Read: %s", line);
+    fclose(f);
+
+    rename("file.txt", "renamed.txt");
+    remove("renamed.txt");
+    return 0;
+}
