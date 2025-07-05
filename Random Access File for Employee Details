@@ -1,0 +1,23 @@
+#include <stdio.h>
+struct Employee {
+    int id;
+    char name[20];
+    float salary;
+};
+
+int main() {
+    FILE *f;
+    struct Employee e;
+    f = fopen("emp.dat", "wb+");
+    for(int i=0; i<3; i++) {
+        printf("Enter id, name, salary: ");
+        scanf("%d %s %f", &e.id, e.name, &e.salary);
+        fwrite(&e, sizeof(e), 1, f);
+    }
+    fseek(f, 1*sizeof(e), SEEK_SET);  // Go to second employee
+    fread(&e, sizeof(e), 1, f);
+    printf("Employee at position 2: %d %s %.2f\n", e.id, e.name, e.salary);
+
+    fclose(f);
+    return 0;
+}
